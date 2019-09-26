@@ -1,7 +1,7 @@
 # RPi scripts
 
 ## ipmailer.py
-> sending email of ip address on booting, works for both python2 and python3 
+> sending an email of IP address on booting, works for both python2 and python3 
 
 #### via curl
 1. `curl -sL https://raw.githubusercontent.com/d-jiang/rpi/master/ipmailer.py | python - to@gmail.com from@gmail.com app_specific_password`
