@@ -55,15 +55,22 @@ def mail():
         smtpserver.starttls()
         smtpserver.login(sender, password)
         # mail body
+        public_ip = get_public_ip()
+        private_ip = get_private_ip()
+        subject = private_ip
+        
         mail_body = "version: %s\nuname: %s" % (platform.version(), platform.uname())
         mail_body += '\n'
-        mail_body += '\nPublic  IP: %s' % get_public_ip()
+        if len(public_ip) > 1:
+            subject = public_ip
+            mail_body += '\nPublic  IP: %s' % get_public_ip()
         mail_body += '\nPrivate IP: %s' % get_private_ip()
         mail_body += '\nDisk Usage: \n%s' % get_df()
         mail_body += '\n/var/log/syslog: \n%s' % get_syslog()
         # compose email
         msg = MIMEText(mail_body)
-        msg['Subject'] = "Server @ "+ get_public_ip() +" started up"
+        
+        msg['Subject'] = "Server @ " + subject + " started up"
         msg['From'] = "Server Info <%s>" % sender
         msg['To'] = sender
         # send email
