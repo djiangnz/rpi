@@ -57,12 +57,12 @@ def mail():
         # mail body
         public_ip = get_public_ip()
         private_ip = get_private_ip()
-        subject = private_ip
+        subject_ip = private_ip
         
         mail_body = "version: %s\nuname: %s" % (platform.version(), platform.uname())
         mail_body += '\n'
         if len(public_ip) > 1:
-            subject = public_ip
+            subject_ip = public_ip
             mail_body += '\nPublic  IP: %s' % get_public_ip()
         mail_body += '\nPrivate IP: %s' % get_private_ip()
         mail_body += '\nDisk Usage: \n%s' % get_df()
@@ -70,7 +70,7 @@ def mail():
         # compose email
         msg = MIMEText(mail_body)
         
-        msg['Subject'] = "Server @ " + subject + " started up"
+        msg['Subject'] = "Server @ " + subject_ip + " started up"
         msg['From'] = "Server Info <%s>" % sender
         msg['To'] = sender
         # send email
