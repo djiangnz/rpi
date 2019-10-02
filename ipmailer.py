@@ -42,7 +42,9 @@ def mail():
         receiver = 'to@gmail.com'
         sender = 'from@gmail.com'
         password = 'password' # or App Specific password (if 2 step verification is on)
-
+        subject = "Server"
+        senderName = "Server Info"
+        
         if len(sys.argv) > 3:
             if sys.argv[1]:
                 receiver = sys.argv[1]
@@ -50,6 +52,10 @@ def mail():
                 sender = sys.argv[2]
             if sys.argv[3]:
                 password = sys.argv[3]
+            if sys.argv[4]:
+                subject = sys.argv[4]
+            if sys.argv[5]:
+                senderName = sys.argv[5]
 
         smtpserver = smtplib.SMTP('smtp.gmail.com', 587)
         smtpserver.starttls()
@@ -70,8 +76,8 @@ def mail():
         # compose email
         msg = MIMEText(mail_body)
         
-        msg['Subject'] = "Server @ " + subject_ip + " started up"
-        msg['From'] = "Server Info <%s>" % sender
+        msg['Subject'] = subject +" @ " + subject_ip + " started up"
+        msg['From'] = senderName + " <%s>" % sender
         msg['To'] = sender
         # send email
         smtpserver.sendmail(sender, [receiver], msg.as_string())
