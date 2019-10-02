@@ -53,10 +53,10 @@ def mail():
             if sys.argv[3]:
                 password = sys.argv[3]
             if len(sys.argv) > 4:
-                if sys.argv[4]:
+                if sys.argv[4] and sys.argv[4] is not '-':
                     subject = sys.argv[4]
             if len(sys.argv) > 5:
-                if sys.argv[5]:
+                if sys.argv[5] and sys.argv[5] is not '-':
                     senderName = sys.argv[5]
 
         smtpserver = smtplib.SMTP('smtp.gmail.com', 587)
