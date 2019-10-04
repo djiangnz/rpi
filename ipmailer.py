@@ -3,7 +3,6 @@
 import subprocess
 import smtplib
 from email.mime.text import MIMEText
-import datetime
 import time
 import platform
 import sys
@@ -26,8 +25,8 @@ def get_syslog():
 
 def run_in_shell(arg):
     try:
-        out = subprocess.Popen(arg, shell=True, stdout=subprocess.PIPE)
-        return out.communicate()[0].decode("utf-8")
+        output = subprocess.Popen(arg, shell=True, stdout=subprocess.PIPE)
+        return output.communicate()[0].decode("utf-8")
     except Exception as e:
         log_error(e)
         return ""
