@@ -77,7 +77,7 @@ def mail():
         # compose email
         msg = MIMEText(mail_body)
         
-        msg['Subject'] = subject +" @ " + subject_ip + " started up"
+        msg['Subject'] = subject + " @ " + subject_ip + " started up"
         msg['From'] = senderName + " <%s>" % sender
         msg['To'] = sender
         # send email
