@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import subprocess
 import smtplib
 from email.mime.text import MIMEText
@@ -7,21 +6,26 @@ import time
 import platform
 import sys
 
+
 def get_public_ip():
-    arg ='dig +short myip.opendns.com @resolver1.opendns.com'
+    arg = 'dig +short myip.opendns.com @resolver1.opendns.com'
     return run_in_shell(arg)
 
+
 def get_private_ip():
-    arg ="hostname -I | cut -d ' ' -f1"
+    arg = "hostname -I | cut -d ' ' -f1"
     return run_in_shell(arg)
+
 
 def get_df():
     arg = 'df -h'
     return run_in_shell(arg)
 
+
 def get_syslog():
     arg = 'tail /var/log/syslog'
     return run_in_shell(arg)
+
 
 def run_in_shell(arg):
     try:
@@ -31,19 +35,20 @@ def run_in_shell(arg):
         log_error(e)
         return ""
 
+
 def log_error(e):
     arg = 'echo "%s" >> ~/.ipmailer.log' % e
     run_in_shell(arg)
 
+
 def mail():
     try:
-        # set account
         receiver = 'to@gmail.com'
         sender = 'from@gmail.com'
-        password = 'password' # or App Specific password (if 2 step verification is on)
+        password = 'password'
         subject = "Server"
         senderName = "Server Info"
-        
+
         if len(sys.argv) > 3:
             if sys.argv[1]:
                 receiver = sys.argv[1]
@@ -65,8 +70,9 @@ def mail():
         public_ip = get_public_ip()
         private_ip = get_private_ip()
         subject_ip = private_ip
-        
-        mail_body = "version: %s\nuname: %s" % (platform.version(), platform.uname())
+
+        mail_body = "version: %s\nuname: %s" % (
+            platform.version(), platform.uname())
         mail_body += '\n'
         if len(public_ip) > 1:
             subject_ip = public_ip
@@ -76,7 +82,7 @@ def mail():
         mail_body += '\n/var/log/syslog: \n%s' % get_syslog()
         # compose email
         msg = MIMEText(mail_body)
-        
+
         msg['Subject'] = subject + " @ " + subject_ip + " started up"
         msg['From'] = senderName + " <%s>" % sender
         msg['To'] = sender
@@ -87,6 +93,7 @@ def mail():
     except Exception as e:
         log_error(e)
         return True
+
 
 cont = True
 counter = 0
