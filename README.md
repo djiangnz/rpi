@@ -1,7 +1,8 @@
 # RPi scripts
 
 ## bootmail.py
-> sending an email of IP address on booting, works for both python2 and python3 
+- sending an email of IP address on booting, works for both python2 and python3.   
+- [dig](https://linux.die.net/man/1/dig) is required if you want to get your public IP address.    
 
 #### Usage
 ##### via curl
