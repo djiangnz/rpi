@@ -24,7 +24,10 @@ def get_df():
 
 def get_syslog():
     arg = 'tail /var/log/syslog'
-    return run_in_shell(arg)
+    log = run_in_shell(arg)
+    if len(log) > 1:
+        log = '\n/var/log/syslog: \n' + log
+    return log
 
 
 def run_in_shell(arg):
@@ -71,15 +74,14 @@ def mail():
         private_ip = get_private_ip()
         subject_ip = private_ip
 
-        mail_body = "version: %s\nuname: %s" % (
-            platform.version(), platform.uname())
+        mail_body = "version: %s\nuname: %s" % (platform.version(), platform.uname())
         mail_body += '\n'
         if len(public_ip) > 1:
             subject_ip = public_ip
             mail_body += '\nPublic  IP: %s' % get_public_ip()
         mail_body += '\nPrivate IP: %s' % get_private_ip()
         mail_body += '\nDisk Usage: \n%s' % get_df()
-        mail_body += '\n/var/log/syslog: \n%s' % get_syslog()
+        mail_body += get_syslog()
         # compose email
         msg = MIMEText(mail_body)
 
