@@ -37,7 +37,7 @@ def run_in_shell(arg):
 
 
 def log_error(e):
-    arg = 'echo "%s" >> ~/.ipmailer.log' % e
+    arg = 'echo "%s" >> ~/.bootmail.log' % e
     run_in_shell(arg)
 
 
